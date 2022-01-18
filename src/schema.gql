@@ -1,0 +1,66 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type User {
+  userNo: Float!
+  termUserType: TermUserType
+  emailId: String!
+  password: String!
+  nickname: String!
+  phoneNumber: String
+  schooSeq: Float!
+  sex: UserSex!
+  birthYear: Float
+  profilePhoto: String
+  userStatus: UserStatus
+  joinDateTime: DateTime
+  recentLoginDateTime: DateTime
+  device: String
+  userProfileText: String
+  loginPlatform: LoginPlatform
+  loginVersion: Float
+  loginDevice: String
+}
+
+enum TermUserType {
+  GUEST
+  STUDENT
+  TEACHER
+  ADMIN
+}
+
+enum UserSex {
+  MAN
+  WOMAN
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+  DELETE
+  BLOCK
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+enum LoginPlatform {
+  IOS
+  ANDROID
+  WEB
+}
+
+type UserInfoResponseDto {
+  users: [User!]
+}
+
+type Query {
+  getAllUsersInfo(params: UsersInfoRequestDto!): UserInfoResponseDto!
+}
+
+input UsersInfoRequestDto {
+  userNo: Float
+}
