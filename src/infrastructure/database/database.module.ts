@@ -7,6 +7,7 @@ import { Module, Global } from '@nestjs/common';
   imports: [
     TypeOrmModule.forRootAsync({
       useFactory: (config: ConfigService) => {
+        console.log(config.get('database'));
         config.get('database').verify();
         return config.get('database');
       },

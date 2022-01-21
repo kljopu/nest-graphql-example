@@ -1,5 +1,5 @@
-import { InternalServerErrorException } from '@nestjs/common';
 import * as path from 'path';
+import { InternalServerErrorException } from '@nestjs/common';
 
 export default {
   type: process.env.DB_TYPE as any,
@@ -11,6 +11,7 @@ export default {
   synchronize: false,
   logging: process.env.DB_LOGGING === 'true' ? true : false,
   entities: [path.join(__dirname, '../modules/**/*.entity{.ts,.js}')],
+  autoLoadEntities: true,
   retryAttempts: 2,
   verify() {
     if (this.has('database.type') === false) {

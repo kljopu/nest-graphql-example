@@ -1,0 +1,5 @@
+
+도메인 서비스가 위치하는 폴더입니다.
+example)
+  ValidateTaxonomyService? (taxonomy가 정확한지 확인한다.)
+  ValidateDictionaryService (Term_Dictionary를 생성할 수 있는지 확인한다. )
