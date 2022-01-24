@@ -13,6 +13,6 @@
     }
   },
   "compilerOptions": {
-    "webpack": false
+    "webpack": true
   }
 }

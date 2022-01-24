@@ -2,7 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import * as helmet from 'helmet';
 import { NestExpressApplication } from '@nestjs/platform-express';
-import { ConfigService } from 'nestjs-config';
+import { ConfigService } from '@nestjs/config';
 import { join } from 'path';
 import { ApolloServer } from 'apollo-server-express';
 import { buildSchema } from 'graphql';

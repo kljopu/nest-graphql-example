@@ -1,4 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 import { FindConditions, Not } from 'typeorm';
 import { User } from '../../domain/entity/user.entity';
 import { UserRepository } from '../../repository/user.repository';
