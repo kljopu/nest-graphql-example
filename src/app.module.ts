@@ -50,7 +50,7 @@ console.log(path.join(__dirname, '../../.env'));
     }),
     DatabaseModule,
     // UserModule,
-    TaxonomyModule,
+    // TaxonomyModule,
   ],
   controllers: [AppController],
   providers: [AppService],
