@@ -1,10 +1,17 @@
-import { HttpException, NotFoundException } from '@nestjs/common';
+import { HttpException, Injectable, NotFoundException } from '@nestjs/common';
 import { TaxonomyCollection } from '@taxonomy/domain/entities/taxonomy.collection';
 import { TermTaxonomy } from '@taxonomy/domain/entities/term-taxonomy.entity';
 import { NodeType } from '@taxonomy/domain/enums/node-type.enum';
 import { TaxonomyType } from '@taxonomy/domain/enums/taxonomy.enum';
-import { Between, EntityRepository, FindOneOptions, In, Repository } from 'typeorm';
+import {
+  Between,
+  EntityRepository,
+  FindOneOptions,
+  In,
+  Repository,
+} from 'typeorm';
 
+@Injectable()
 @EntityRepository(TermTaxonomy)
 export class TaxonomyRepository extends Repository<TermTaxonomy> {
   async findByIds(ids: number[]): Promise<TermTaxonomy[]> {
@@ -14,7 +21,10 @@ export class TaxonomyRepository extends Repository<TermTaxonomy> {
     // return new TaxonomyCollection(taxonomys);
   }
 
-  async findOneDepthByIdAndTaxonomy(id: number, taxonomy: TaxonomyType): Promise<TermTaxonomy[]> {
+  async findOneDepthByIdAndTaxonomy(
+    id: number,
+    taxonomy: TaxonomyType,
+  ): Promise<TermTaxonomy[]> {
     const taxonomyList = await this.createQueryBuilder('termTaxonomy')
       .leftJoinAndSelect(
         'termTaxonomy.taxonomyRelationship',
@@ -40,7 +50,11 @@ export class TaxonomyRepository extends Repository<TermTaxonomy> {
     taxonomy: TaxonomyType = TaxonomyType.SCHOOL_GRADES,
   ): Promise<TermTaxonomy[]> {
     const taxonomyList = await this.createQueryBuilder('termTaxonomy')
-      .select(['termTaxonomy.term_taxonomy_id', 'termTaxonomy.term_depth', 'dictionary.name'])
+      .select([
+        'termTaxonomy.term_taxonomy_id',
+        'termTaxonomy.term_depth',
+        'dictionary.name',
+      ])
       .innerJoin('termTaxonomy.dictionary', 'dictionary')
       .where('termTaxonomy.taxonomy = :taxonomy', { taxonomy: taxonomy })
       .andWhereInIds(ids)
@@ -54,9 +68,14 @@ export class TaxonomyRepository extends Repository<TermTaxonomy> {
     return await this.createQueryBuilder('termTaxonomy')
       .select(['termTaxonomy.term_taxonomy_id', 'dictionary.name'])
       .innerJoin('termTaxonomy.dictionary', 'dictionary')
-      .where('termTaxonomy.taxonomy = :taxonomy', { taxonomy: TaxonomyType.YEAR })
+      .where('termTaxonomy.taxonomy = :taxonomy', {
+        taxonomy: TaxonomyType.YEAR,
+      })
       .andWhere('termTaxonomy.term_depth = :depth', { depth: 2 })
-      .andWhere('termTaxonomy.order > :start AND termTaxonomy.order < :end', { start: 10, end: 40 })
+      .andWhere('termTaxonomy.order > :start AND termTaxonomy.order < :end', {
+        start: 10,
+        end: 40,
+      })
       .orderBy('termTaxonomy.order')
       .getMany();
   }
@@ -111,7 +130,10 @@ export class TaxonomyRepository extends Repository<TermTaxonomy> {
     return true;
   }
 
-  async findOneByIdThrow(id: number, findOption?: FindOneOptions): Promise<TermTaxonomy> {
+  async findOneByIdThrow(
+    id: number,
+    findOption?: FindOneOptions,
+  ): Promise<TermTaxonomy> {
     const found = await this.findOne(id, findOption);
 
     if (!found) {
@@ -128,7 +150,9 @@ export class TaxonomyRepository extends Repository<TermTaxonomy> {
     const taxonomyList = await this.createQueryBuilder('taxonomy')
       .leftJoinAndSelect('taxonomy.taxonomyRelationship', 'tr')
       .innerJoinAndSelect('taxonomy.dictionary', 'dictionary')
-      .where('tr.start_taxonomy_id = :parentTaxonomyId', { parentTaxonomyId: parentTaxonomyId })
+      .where('tr.start_taxonomy_id = :parentTaxonomyId', {
+        parentTaxonomyId: parentTaxonomyId,
+      })
       .andWhere('taxonomy.taxonomy = :taxonomy', { taxonomy: taxonomy })
       .orderBy('tr.tr_order', 'ASC')
       .getMany();
@@ -144,11 +168,15 @@ export class TaxonomyRepository extends Repository<TermTaxonomy> {
       .getOne();
   }
 
-  async findManyWithRelationShip(taxonomyIds: number[]): Promise<TermTaxonomy[]> {
+  async findManyWithRelationShip(
+    taxonomyIds: number[],
+  ): Promise<TermTaxonomy[]> {
     return await this.createQueryBuilder('tt')
       .leftJoinAndSelect('tt.taxonomyRelationship', 'tr')
       .leftJoinAndSelect('tt.dictionary', 'td')
-      .where('tt.term_taxonomy_id IN (:taxonomyIds)', { taxonomyIds: taxonomyIds })
+      .where('tt.term_taxonomy_id IN (:taxonomyIds)', {
+        taxonomyIds: taxonomyIds,
+      })
       .getMany();
   }
 
@@ -175,7 +203,10 @@ export class TaxonomyRepository extends Repository<TermTaxonomy> {
    * @param taxonomyIds 값을 증가 또는 감소 taxonomy_id 리스트
    * @returns boolean
    */
-  async changeDepthOfTaxonomy(taxonomyIds: number[], value: number): Promise<void> {
+  async changeDepthOfTaxonomy(
+    taxonomyIds: number[],
+    value: number,
+  ): Promise<void> {
     await this.createQueryBuilder()
       .update()
       .set({

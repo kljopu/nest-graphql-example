@@ -43,12 +43,14 @@ export class GetTaxonomyService {
    * @returns TermTaxonomy[]
    */
   async getPath(taxonomyId: number): Promise<TermTaxonomy[]> {
-    const allParentTaxonomyIds = await this.taxonomyRelationShipRepository.allSearchParentTaxonomy(
-      taxonomyId,
-    );
-    const allParentTaxonomyList = await this.taxonomyRepository.findByIdsWithDictionary(
-      allParentTaxonomyIds,
-    );
+    const allParentTaxonomyIds =
+      await this.taxonomyRelationShipRepository.allSearchParentTaxonomy(
+        taxonomyId,
+      );
+    const allParentTaxonomyList =
+      await this.taxonomyRepository.findByIdsWithDictionary(
+        allParentTaxonomyIds,
+      );
 
     return allParentTaxonomyList;
   }

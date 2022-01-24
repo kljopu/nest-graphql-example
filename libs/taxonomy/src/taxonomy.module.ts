@@ -27,7 +27,11 @@ const domain = [RelationService];
 
 const factory = [TermDictionaryFactory];
 
-const infrastructure = [TaxonomyRelationShipRepository, TaxonomyRepository, DictionaryRepository];
+const infrastructure = [
+  TaxonomyRelationShipRepository,
+  TaxonomyRepository,
+  DictionaryRepository,
+];
 
 @Module({
   imports: [TypeOrmModule.forFeature(infrastructure)],

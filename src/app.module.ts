@@ -12,6 +12,13 @@ import { TaxonomyModule } from '@taxonomy/taxonomy.module';
 
 @Module({
   imports: [
+    // ConfigModule.load(
+    //   path.resolve(__dirname, '../src/./config', '**/!(*.d).{ts,js}'),
+    //   {
+    //     modifyConfigName: (name) => name.replace('.config', ''),
+    //     path: path.join(__dirname, '../../.env'),
+    //   },
+    // ),
     ConfigModule.resolveRootPath(__dirname).load(
       '../src/./config/*.config.{ts,js}',
       {
@@ -25,14 +32,14 @@ import { TaxonomyModule } from '@taxonomy/taxonomy.module';
         //   : path.join(__dirname, '../.env'),
       },
     ),
+    TaxonomyModule,
     GraphQLModule.forRoot({
       debug: true,
-      playground: true,
       installSubscriptionHandlers: true,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       cors: true,
+      // playground: true,
     }),
-    TaxonomyModule,
     DatabaseModule,
     UserModule,
   ],
