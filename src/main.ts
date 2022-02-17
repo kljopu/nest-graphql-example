@@ -36,11 +36,11 @@ async function bootstrap() {
 
   const configService = app.get(ConfigService);
   const appConfig = configService.get('app');
-  appConfig.verify();
+  // appConfig.verify();
 
-  const { PORT } = appConfig;
-  await app.listen(PORT || 3000, () => {
-    console.log(`server listen on ${PORT}`);
+  // const { PORT } = appConfig;
+  await app.listen(3000, () => {
+    console.log(`server listen on `);
     // const loggerService = app.get(MyLoggerService);
     // loggerService.log(`server listen on ${PORT}`, 'bootstrap');
   });

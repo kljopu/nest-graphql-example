@@ -7,7 +7,10 @@ import { UserInfoResponseDto } from './dtos/user-info.response.dto';
 
 @Injectable()
 export class UserInfoApplicationService {
-  constructor(private readonly userRepository: UserRepository) {}
+  constructor(
+    @InjectRepository(UserRepository)
+    private readonly userRepository: UserRepository,
+  ) {}
 
   public async findAllUsers(
     findConfitions: FindConditions<User>,

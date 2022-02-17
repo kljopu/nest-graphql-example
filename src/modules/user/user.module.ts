@@ -7,6 +7,6 @@ import { UserInfoApplicationService } from './application/user-info/user-info.ap
 @Module({
   imports: [TypeOrmModule.forFeature([UserRepository])],
   providers: [UserResolver, UserInfoApplicationService],
-  exports: [],
+  exports: [UserInfoApplicationService],
 })
 export class UserModule {}

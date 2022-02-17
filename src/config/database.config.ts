@@ -6,8 +6,10 @@ import {
   TypeOrmModuleOptions,
 } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { User } from 'src/modules/user/domain/entity/user.entity';
 
 config();
+console.log(path.join(__dirname, '../src/modules/**/*.entity{.ts,.js}'));
 
 // export default () => ({
 //   type: process.env.DB_TYPE as any,
@@ -74,11 +76,11 @@ export default class TypeOrmConfig {
     return {
       type: 'mysql',
       host: configService.get('DB_HOST') || 'localhost',
-      port: configService.get('DB_PORT') || 5432,
+      port: configService.get('DB_PORT') || 3306,
       username: configService.get('DB_USER'),
       password: configService.get('DB_PASSWORD'),
       database: configService.get('DB_DATABASE'),
-      entities: [__dirname + '../modules/**/*.entity{.ts,.js}'],
+      entities: [path.join(__dirname, '../src/modules/**/*.entity{.ts,.js}')],
       synchronize: false,
       logging: true,
     };
